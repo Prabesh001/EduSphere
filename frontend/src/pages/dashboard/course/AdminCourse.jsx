@@ -98,14 +98,14 @@ const CourseListTableAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {courses.slice(startIndex, endIndex).map((course) => (
+          {courses.slice(startIndex, endIndex).map((course, i) => (
             <tr key={course.id}>
-              <td>
+              <td className="text-blue-500">
                 <Link to={`/teacherDashboard/getCourse/${course.id}`}>
-                  {course.id}
+                  {i + 1}.
                 </Link>
               </td>
-              <td>{course.courseName}</td>
+              <td className="capitalize">{course.courseName}</td>
               <td>{course.courseDescription}</td>
               <td>
                 <img

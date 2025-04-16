@@ -50,6 +50,8 @@ const CourseList = () => {
     setPriceRange(event.target.value);
   };
 
+  console.log(teachers);
+
   const renderCourseCards = () => {
     let filteredCourses = teachers;
 
@@ -61,7 +63,7 @@ const CourseList = () => {
     // Filter by category
     if (selectedCategory) {
       filteredCourses = filteredCourses.filter(
-        (course) => course.courseCategory.categoryName === selectedCategory
+        (course) => course?.courseCategory?.categoryName === selectedCategory
       );
     }
 
@@ -91,7 +93,9 @@ const CourseList = () => {
 
           {/* Course Details */}
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2 capitalize">{course.courseName}</div>
+            <div className="font-bold text-xl mb-2 capitalize">
+              {course.courseName}
+            </div>
             <p className="text-gray-700 text-base">
               {course.courseDescription}
             </p>
@@ -146,8 +150,9 @@ const CourseList = () => {
           </select>
         </div>
 
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">{renderCourseCards()}</div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {renderCourseCards()}
+        </div>
       </div>
     </div>
   );

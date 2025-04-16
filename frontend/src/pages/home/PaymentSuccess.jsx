@@ -1,21 +1,62 @@
+import axios from "axios";
 import { CheckCircle } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { baseUrl } from "../../config";
 
 export default function PaymentSuccessPage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const userDetails = searchParams.get("user");
-  const user = userDetails ? JSON.parse(decodeURIComponent(userDetails)) : null;
+  const userDetails = searchParams.get("data");
+  const decoded = JSON.parse(atob(userDetails));
 
-  const transactionId =
-    user.transactionId || searchParams.get("transaction_id") || "ESW123456789";
-  const amount = searchParams.get("amount") || "1,000.00";
+  const navigate = useNavigate();
+
+  const user = localStorage.getItem("user");
+  const userInfo = JSON.parse(localStorage.getItem("userDetails"));
 
   const currentDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+
+  const handleEnroll = async (e) => {
+    e.preventDefault();
+    if (localStorage.getItem("token")) {
+      try {
+        const response = await axios.get(
+          baseUrl + "/user/enroll/" + userInfo?.courseId,
+          {
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        );
+        toast.success(response.data.message);
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Enrollment failed");
+      }
+    }
+  };
+
+  const handleRedirect = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userInfo");
+    navigate(userInfo.endpoint || "/");
+  };
+
+  useEffect(() => {
+    handleEnroll();
+    toast.success("Payment Sucessful!");
+
+    const timeout = setTimeout(() => {
+      handleRedirect();
+    }, 30000);
+
+    return () => clearInterval(timeout);
+  }, []);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
@@ -29,7 +70,7 @@ export default function PaymentSuccessPage() {
             Payment Successful!
           </h1>
           <p className="text-gray-600">
-            Thank you {user?.name || "Customer"}, your payment has been
+            Thank you {user || userInfo.name || "User"}, your payment has been
             processed.
           </p>
         </div>
@@ -38,37 +79,44 @@ export default function PaymentSuccessPage() {
         <div className="px-6 pb-6">
           <div className="mb-6 rounded-lg bg-green-50 p-4">
             <div className="grid grid-cols-2 gap-3 text-sm">
-              {user && (
+              {/* {user && (
                 <>
                   <div className="text-gray-500">Customer Name:</div>
                   <div className="font-medium text-gray-500">{user.name}</div>
                 </>
-              )}
+              )} */}
               <div className="text-gray-500">Transaction ID:</div>
-              <div className="font-medium text-gray-500">{transactionId}</div>
+              <div className="font-medium text-gray-500">
+                {decoded.transaction_uuid}
+              </div>
               <div className="text-gray-500">Amount:</div>
-              <div className="font-medium text-gray-500">Rs. {amount}</div>
+              <div className="font-medium text-gray-500">
+                Rs. {decoded.total_amount}
+              </div>
               <div className="text-gray-500">Date:</div>
               <div className="font-medium text-gray-500">{currentDate}</div>
               <div className="text-gray-500">Status:</div>
-              <div className="font-medium text-green-600">Completed</div>
+              <div className="font-medium text-green-600">{decoded.status}</div>
             </div>
           </div>
-
-          <p className="mb-6 text-center text-sm text-gray-500">
-            A confirmation has been sent to{" "}
-            {user?.email || "your email address"}.
-          </p>
 
           {/* Buttons */}
           <div className="space-y-3">
             <Link
-              to={user.endPoint || "/"}
+              onClick={() => {
+                localStorage.removeItem("user");
+                localStorage.removeItem("userInfo");
+              }}
+              to={userInfo.courseId || "/"}
               className="block w-full rounded-md bg-green-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-green-700"
             >
               Go Back
             </Link>
             <Link
+              onClick={() => {
+                localStorage.removeItem("user");
+                localStorage.removeItem("userInfo");
+              }}
               to="/"
               className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-center font-medium text-gray-700 transition-colors hover:bg-gray-50"
             >

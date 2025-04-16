@@ -10,6 +10,15 @@ const Navbar = () => {
   const [teachers, setTeachers] = useState({});
   const menuRef = useRef(null);
 
+  useEffect(() => {
+    if (teachers) {
+      localStorage.setItem(
+        "user",
+        `${teachers.user?.firstName} ${teachers.user?.lastName}`
+      );
+    }
+  }, [teachers]);
+  
   const getAllData = async () => {
     let config = {
       headers: {
@@ -52,6 +61,16 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showMenu]);
+
+  const handleLogout = () => {
+    const confirmed = window.confirm("Are you sure you want to log out?");
+
+    if (confirmed) {
+      localStorage.clear();
+      navigate("/login");
+      setShowMenu(false);
+    }
+  };
 
   console.log(teachers);
 
@@ -129,12 +148,7 @@ const Navbar = () => {
                       View Profile
                     </Link>
                     <Link
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        localStorage.clear();
-                        navigate("/login");
-                        setShowMenu(false);
-                      }}
+                      onClick={handleLogout}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Logout

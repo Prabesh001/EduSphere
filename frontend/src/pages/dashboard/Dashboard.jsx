@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
 
-import { Outlet , useNavigate} from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const confirmed = window.confirm("Are you sure you want to logout?");
+    if (confirmed) {
+      localStorage.clear();
+      navigate("/login");
+    }
+  };
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -32,7 +40,7 @@ const Dashboard = () => {
                   ></path>
                 </svg>
               </button>
-              <a href="https://flowbite.com" className="flex ms-2 md:me-24">
+              <a href="/dashboard" className="flex ms-2 md:me-24">
                 <img
                   src="https://flowbite.com/docs/images/logo.svg"
                   className="h-8 me-3"
@@ -203,10 +211,7 @@ const Dashboard = () => {
             </li>
             <li>
               <Link
-                onClick={() => {
-                  localStorage.clear();
-                  navigate("/login");
-                }}
+                onClick={handleLogout}
                 // to="/dashboard/addTeacher"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >

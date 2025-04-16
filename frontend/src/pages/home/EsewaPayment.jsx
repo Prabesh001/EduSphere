@@ -6,16 +6,17 @@ import { PaymentContext } from "../../App";
 const EsewaPayment = ({ amount, user }) => {
   const { setIsPaying } = useContext(PaymentContext);
   const transactionId = uuidv4();
-  const userDetails = encodeURIComponent(
-    JSON.stringify({
-      name: user.name,
-      id: user.id,
-      transactionId: transactionId,
-      endPoint: user.endPoint
-    })
-  );
+  const userDetails = JSON.stringify({
+    name: user.name,
+    id: user.id,
+    endPoint: user.endpoint,
+  });
 
-  console.log(userDetails)
+  useEffect(() => {
+    if (userDetails) {
+      localStorage.setItem("userDetails", userDetails);
+    }
+  }, [userDetails]);
 
   const [formData, setFormData] = useState({
     amount: Number(amount),
@@ -57,7 +58,6 @@ const EsewaPayment = ({ amount, user }) => {
     }));
   }, [amount]);
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsPaying(true);

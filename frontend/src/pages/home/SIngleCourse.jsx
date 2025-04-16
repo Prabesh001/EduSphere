@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { baseUrl } from "../../config";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -257,6 +257,8 @@ const SingleCourse = () => {
     return c.courseId === Number(id);
   });
 
+  console.log(course);
+
   return (
     <div className="max-w-4xl p-4 lg:p-0 mx-auto mt-10">
       <div className="flex flex-wrap">
@@ -280,21 +282,19 @@ const SingleCourse = () => {
             Price: ${course.coursePrice}
           </p>
 
-          {filterEnrolled?.length > 0 ? (
-            filterEnrolled[0].paymentStatus ? (
-              <Chip variant="filled" color="success" label="Enrolled" />
-            ) : (
-              <>
-                <EsewaPayment
-                  amount={course.coursePrice}
-                  user={{
-                    name: `${student?.user?.firstName} ${student?.user?.lastName}`,
-                    id: student?.userId,
-                    endpoint: `/course/${course?.id}`,
-                  }}
-                />
-              </>
-            )
+          {filterEnrolled && filterEnrolled[0] ? (
+            <Chip variant="filled" color="success" label="Enrolled" />
+          ) : course?.coursePrice > 0 ? (
+            <>
+              <EsewaPayment
+                amount={course.coursePrice}
+                user={{
+                  name: `${student?.user?.firstName} ${student?.user?.lastName}`,
+                  id: student?.userId,
+                  endpoint: `/course/${course?.id}`,
+                }}
+              />
+            </>
           ) : (
             <button
               onClick={handleEnroll}
@@ -303,6 +303,7 @@ const SingleCourse = () => {
               Enroll Now
             </button>
           )}
+
           <p className="mt-2">
             Total Progress: {totalProgress > 100 ? 100 : totalProgress || 0}%
           </p>
