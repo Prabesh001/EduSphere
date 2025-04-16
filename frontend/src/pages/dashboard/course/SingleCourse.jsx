@@ -18,6 +18,8 @@ const SingleCoursePage = () => {
 
   const { id } = useParams();
 
+  console.log(course)
+
   const getAllCategoryData = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/teacher/get-course/${id}`, {
@@ -113,6 +115,7 @@ const SingleCoursePage = () => {
         getAllCourseChapterData();
       }
     } catch (error) {
+      alert(`Failed To Add Chapter! ${error}`);
       console.error("Error adding chapter:", error);
     }
   };
@@ -137,7 +140,7 @@ const SingleCoursePage = () => {
       </div>
 
       {showModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center">
+        <div className="fixed z-50 inset-0 overflow-y-auto flex items-center justify-center">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
           <div className="relative bg-white rounded-lg p-8 max-w-md mx-auto">
             <form onSubmit={handleChapterSubmit}>

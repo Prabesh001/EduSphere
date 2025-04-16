@@ -1,58 +1,47 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const navigate = useNavigate()
-    const [data,setData] = useState({
-        firstName : "",
-        lastName : "",
-        email : "",
-        password : ""
-    })
-    const handleChange = (e)=>{
-        const {name,value} = e.target 
-        console.log(name,value)
-        setData({
-            ...data,
-            [name] : value
-        })
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/register", data);
+      console.log(response);
+      if (response.status === 200) {
+        return navigate("/login");
+      }
+    } catch (e) {
+      console.log(e);
     }
-
-    const handleSubmit = async (e)=>{
-        e.preventDefault()
-        try{
-            const response = await axios.post('http://localhost:3000/register',data)
-            console.log(response)
-            if(response.status === 200) {
-                return navigate('/login')
-            }
-        }catch(e){
-        console.log(e)
-        }
-    }
+  };
   return (
-
     <>
-
-
       {/* Checkout Section: Simple Box */}
-      <div className="bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
+      <div className="bg-gray-100 min-h-screen dark:bg-gray-900 dark:text-gray-100">
         <div className="container mx-auto px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
           {/* Box */}
           <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
             <div className="mx-auto w-full max-w-lg grow p-5">
               {/* Heading */}
               <div className="mt-5 text-center">
-   
-                <h1 className="mb-4 text-2xl font-bold">
-                 Register Here
-                </h1>
-  
-            
-           
-              
+                <h1 className="mb-4 text-2xl font-bold">Register Here</h1>
               </div>
               {/* END Heading */}
 
@@ -101,8 +90,7 @@ const Register = () => {
                       />
                     </div>
                   </div>
-           
-               
+
                   <button
                     type="submit"
                     className="inline-flex w-full items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-6 py-3 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90"
@@ -116,7 +104,13 @@ const Register = () => {
               {/* Footer */}
               <div className="my-5 text-center">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Forgot Password ? <a href="/forgotPassword">Click Here</a>
+                  <a
+                    className="inline-block text-sm font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
+                    href="/forgotPassword"
+                  >
+                    {" "}
+                    Forgot Password?
+                  </a>
                 </p>
               </div>
               {/* Footer */}
@@ -128,9 +122,6 @@ const Register = () => {
       {/* END Checkout Section: Simple Box */}
     </>
   );
-}
+};
 
-
-
-
-export default Register
+export default Register;

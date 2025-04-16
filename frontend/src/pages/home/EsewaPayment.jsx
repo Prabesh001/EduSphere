@@ -11,8 +11,11 @@ const EsewaPayment = ({ amount, user }) => {
       name: user.name,
       id: user.id,
       transactionId: transactionId,
+      endPoint: user.endPoint
     })
   );
+
+  console.log(userDetails)
 
   const [formData, setFormData] = useState({
     amount: Number(amount),

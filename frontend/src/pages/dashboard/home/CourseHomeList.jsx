@@ -41,19 +41,21 @@ const CourseList = () => {
     return teachers.map((course) => (
       <div
         key={course.id}
-        className="max-w-sm rounded overflow-hidden shadow-2xl m-4 pt-10"
+        className="max-w-full rounded overflow-hidden shadow-2xl "
       >
         <Link to={"/course/" + course.id}>
           {/* Course Image */}
           <img
-            className=" h-[300px] w-[290px]"
+            className=" h-[300px] w-full object-cover"
             src={baseUrl + "/" + course.courseImage}
             alt="Course"
           />
 
           {/* Course Details */}
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">{course.courseName}</div>
+            <div className="font-bold text-xl mb-2 capitalize">
+              {course.courseName}
+            </div>
             <p className="text-gray-700 text-base">
               {course.courseDescription}
             </p>
@@ -83,7 +85,9 @@ const CourseList = () => {
         </div>
       </div>
       <h1 className="text-center font-bold my-8 text-5xl">Latest Courses</h1>
-      <div className="flex flex-wrap w-[90%] m-auto">{renderCourseCards()}</div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {renderCourseCards()}
+      </div>
     </div>
   );
 };

@@ -67,7 +67,7 @@ const RatingModal = ({ onClose, fetchDataComment }) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Write your comment..."
-          className="border border-gray-300 rounded-md p-2 mb-2 w-full"
+          className="border border-gray-300 bg-white text-black rounded-md p-2 mb-2 w-full"
           rows="4"
         />
         <button

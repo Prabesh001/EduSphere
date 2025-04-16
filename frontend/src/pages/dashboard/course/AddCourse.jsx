@@ -66,10 +66,11 @@ const AddCourseForm = () => {
         );
 
         if (response.status === 200) {
-          toast("success", response.data.message);
+          toast.success("success", response.data.message);
           nav("/teacherDashboard/getCourse");
         }
       } catch (error) {
+        toast.error(error.response || "Error adding course!");
         console.error("Error adding course:", error.response);
         // You can show an error message to the user
       }

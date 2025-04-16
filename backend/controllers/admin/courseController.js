@@ -62,7 +62,6 @@ exports.deleteCourseCategory = async (req, res) => {
 exports.getAllCourseCategories = async (req, res) => {
   try {
     const category = await categories.findAll();
-    console.log(category);
     res.status(200).json(category);
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -93,7 +92,6 @@ exports.addCourse = async (req, res) => {
   const { courseName, courseDescription, coursePrice, courseCategoryId } =
     req.body;
   const userId = req.userId;
-  console.log(req.file);
   const courseImage = req.file.path;
 
   await courses.create({
@@ -277,7 +275,6 @@ exports.enrollment = async (req, res) => {
     const decryptedToken = jwt.verify(token, "haha");
     const userEmail = decryptedToken.id;
 
-    console.log(userEmail);
 
     // Check if the user is already enrolled in the specific course
     const existingEnrollment = await enroll.findOne({
@@ -287,7 +284,6 @@ exports.enrollment = async (req, res) => {
       },
     });
 
-    console.log(existingEnrollment);
     if (existingEnrollment) {
       return res
         .status(400)

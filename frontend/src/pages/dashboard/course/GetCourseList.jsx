@@ -164,14 +164,14 @@ const CourseListTable = () => {
           </tr>
         </thead>
         <tbody>
-          {teachers.slice(startIndex, endIndex).map((teacher) => (
+          {teachers.slice(startIndex, endIndex).map((teacher, i) => (
             <tr key={teacher.id}>
-              <td>
+              <td className="text-center text-blue-500">
                 <Link to={`/teacherDashboard/getCourse/${teacher.id}`}>
-                  {teacher.id}
+                  {i + 1}.
                 </Link>
               </td>
-              <td>{teacher.courseName}</td>
+              <td className="capitalize">{teacher.courseName}</td>
               <td>{teacher.courseDescription}</td>
               <td>
                 <img
@@ -181,7 +181,7 @@ const CourseListTable = () => {
                 />
               </td>
               <td>{teacher.coursePrice}</td>
-              <td>
+              <td className="capitalize">
                 {" "}
                 <input type="checkbox" checked={teacher.isVerified} />
                 {teacher.isVerified ? "verified" : "unverified"}

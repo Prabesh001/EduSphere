@@ -290,6 +290,7 @@ const SingleCourse = () => {
                   user={{
                     name: `${student?.user?.firstName} ${student?.user?.lastName}`,
                     id: student?.userId,
+                    endpoint: `/course/${course?.id}`,
                   }}
                 />
               </>
@@ -303,7 +304,7 @@ const SingleCourse = () => {
             </button>
           )}
           <p className="mt-2">
-            Total Progress: {totalProgress > 100 ? 100 : (totalProgress || 0)}%
+            Total Progress: {totalProgress > 100 ? 100 : totalProgress || 0}%
           </p>
         </div>
       </div>

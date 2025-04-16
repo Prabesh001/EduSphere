@@ -43,7 +43,6 @@ passport.use(
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
       userProfile = profile;
       return done(null, userProfile);
     }

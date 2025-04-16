@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
 
-import { Outlet , useNavigate} from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const TeacherDashboard = () => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const confirmed = window.confirm("Are you sure you want to logout?");
+    if (confirmed) {
+      localStorage.clear();
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -33,7 +41,7 @@ const TeacherDashboard = () => {
                   ></path>
                 </svg>
               </button>
-              <a href="https://flowbite.com" className="flex ms-2 md:me-24">
+              <a href="/teacherDashboard" className="flex ms-2 md:me-24">
                 <img
                   src="https://flowbite.com/docs/images/logo.svg"
                   className="h-8 me-3"
@@ -86,7 +94,7 @@ const TeacherDashboard = () => {
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
-                        TeacherDashboard
+                        Teacher Dashboard
                       </Link>
                     </li>
                     <li>
@@ -168,10 +176,7 @@ const TeacherDashboard = () => {
             </li>
             <li>
               <Link
-                onClick={() => {
-                  localStorage.clear();
-                  navigate("/login");
-                }}
+                onClick={handleLogout}
                 // to="/dashboard/addTeacher"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >

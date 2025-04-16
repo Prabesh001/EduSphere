@@ -4,16 +4,16 @@ import { Link, useLocation } from "react-router-dom";
 export default function PaymentFailurePage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const userDetails = searchParams.get('user');
+  const userDetails = searchParams.get("user");
   const user = userDetails ? JSON.parse(decodeURIComponent(userDetails)) : null;
-  
-  const transactionId = searchParams.get('transaction_id') || 'ESW123456789';
-  const amount = searchParams.get('amount') || '1,000.00';
-  
-  const currentDate = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+
+  const transactionId = searchParams.get("transaction_id") || "ESW123456789";
+  const amount = searchParams.get("amount") || "1,000.00";
+
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   const clearPaying = () => {
@@ -31,9 +31,7 @@ export default function PaymentFailurePage() {
           <h1 className="mb-2 text-2xl font-bold text-red-700">
             Payment Failed
           </h1>
-          <p className="text-gray-600">
-            Your payment could not be processed.
-          </p>
+          <p className="text-gray-600">Your payment could not be processed.</p>
         </div>
 
         {/* Content */}
@@ -44,8 +42,6 @@ export default function PaymentFailurePage() {
                 <>
                   <div className="text-gray-500">Customer Name:</div>
                   <div className="font-medium text-gray-500">{user.name}</div>
-                  <div className="text-gray-500">Email:</div>
-                  <div className="font-medium text-gray-500">{user.email}</div>
                 </>
               )}
               <div className="text-gray-500">Transaction ID:</div>
@@ -75,11 +71,11 @@ export default function PaymentFailurePage() {
           {/* Buttons */}
           <div className="space-y-3">
             <Link
-              to="/"
+              to={user.endPoint || "/"}
               className="block w-full rounded-md bg-red-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-red-700"
               onClick={clearPaying}
             >
-              Try Again
+              Go Back
             </Link>
             <Link
               to="/"

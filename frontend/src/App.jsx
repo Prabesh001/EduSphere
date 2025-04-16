@@ -48,7 +48,7 @@ function App() {
             element={
               <PaymentProtectedRoute>
                 <PaymentSuccessPage />
-              </PaymentProtectedRoute>
+               </PaymentProtectedRoute>
             }
           />
           <Route
@@ -61,7 +61,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/request" element={<ForgotPassword />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/password-reset" element={<ChangePassword />} />
           <Route path="/unauthorize" element={<UnauthorizedPage />} />
           <Route path="/google" element={<Google />} />

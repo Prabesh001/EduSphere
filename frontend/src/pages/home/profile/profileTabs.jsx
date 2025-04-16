@@ -9,9 +9,9 @@ const EnrolledCourses = ({ courses }) => {
           key={course.id}
           className="flex justify-between items-center border-b py-2"
         >
-          <p>{course.course.courseName}</p>
-          <p>{course.course.courseDescription}</p>
-          <p>{course.course.createdAt}</p>
+          <p>{course.course?.courseName}</p>
+          <p>{course.course?.courseDescription}</p>
+          <p>{course.course?.createdAt}</p>
         </div>
       ))}
     </div>
@@ -23,7 +23,7 @@ const CompletedCourses = ({ courses }) => {
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">Completed Courses</h2>
-      {courses.map((course) => (
+      {courses?.map((course) => (
         <div
           key={course.id}
           className="flex justify-between items-center border-b py-2"

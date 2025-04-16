@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaGoogle } from "react-icons/fa6";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ const Login = () => {
                       <span className="ml-2 text-sm">Remember me</span>
                     </label> */}
                       <a
-                        href="#"
+                        href="/forgotPassword"
                         className="inline-block text-sm font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
                       >
                         Forgot Password?
@@ -165,15 +166,7 @@ const Login = () => {
                         }
                         className="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700"
                       >
-                        <svg
-                          className="bi bi-google inline-block size-4 text-[#1877f2]"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
-                        </svg>
+                        <FaGoogle />
                         <span>Google</span>
                       </button>
                     </div>
@@ -181,7 +174,7 @@ const Login = () => {
                 </form>
               </div>
               <div className="grow bg-gray-50 p-5 text-center text-sm dark:bg-gray-700/50 md:px-16">
-                Don’t have an account yet?
+                Don’t have an account yet?{" "}
                 <a
                   href="/register"
                   className="font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"

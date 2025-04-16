@@ -62,7 +62,7 @@ const HomeTeacherDashboard = () => {
       </div>
       <div>
         <h2 className="text-lg text-center font-semibold mb-2">
-          Individaul Course Enrollment Count
+          Individual Course Enrollment Count
         </h2>
         <div className="grid grid-cols-1 gap-4">
           {coursesWithEnrollmentCount.map((course) => (
@@ -77,7 +77,7 @@ const HomeTeacherDashboard = () => {
 const Card = ({ course }) => {
   return (
     <div className="bg-white rounded shadow p-4">
-      <h2 className="text-lg font-semibold mb-2">{course.courseName}</h2>
+      <h2 className="text-lg font-semibold mb-2 capitalize">{course.courseName}</h2>
       <p className="text-3xl font-bold">{course.enrolls.length}</p>
     </div>
   );

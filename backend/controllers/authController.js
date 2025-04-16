@@ -64,7 +64,6 @@ exports.loginUser = async (req, res) => {
 exports.request = async (req, res) => {
   const userEmail = req.body.email;
   const resetLink = `http://localhost:5173/password-reset?email=${userEmail}`;
-  console.log(userEmail);
 
   // Send the reset email
   try {

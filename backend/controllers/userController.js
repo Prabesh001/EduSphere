@@ -13,7 +13,6 @@ exports.getProfile = async (req, res) => {
       where: { userId: userId },
       include: [{ model: users }],
     });
-    console.log(profileDetails, "profile");
 
     if (!profileDetails) {
       return res.status(404).json({ message: "Profile not found" });
