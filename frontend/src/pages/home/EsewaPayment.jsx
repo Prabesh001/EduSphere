@@ -27,8 +27,8 @@ const EsewaPayment = ({ amount, user }) => {
     product_service_charge: "0",
     product_delivery_charge: "0",
     product_code: "EPAYTEST",
-    success_url: `http://localhost:5173/paymentsuccess?user=${userDetails}`,
-    failure_url: `http://localhost:5173/paymentfailure?user=${userDetails}`,
+    success_url: `http://localhost:5173/paymentsuccess`,
+    failure_url: `http://localhost:5173/paymentfailure`,
     signed_field_names: "total_amount,transaction_uuid,product_code",
     signature: "",
   });
