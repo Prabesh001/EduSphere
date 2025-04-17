@@ -10,6 +10,7 @@ const EsewaPayment = ({ amount, user }) => {
     name: user.name,
     id: user.id,
     endPoint: user.endpoint,
+    price: user.coursePrice
   });
 
   useEffect(() => {

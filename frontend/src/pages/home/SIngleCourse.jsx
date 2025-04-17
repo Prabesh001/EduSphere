@@ -257,8 +257,6 @@ const SingleCourse = () => {
     return c.courseId === Number(id);
   });
 
-  console.log(course);
-
   return (
     <div className="max-w-4xl p-4 lg:p-0 mx-auto mt-10">
       <div className="flex flex-wrap">
@@ -291,7 +289,8 @@ const SingleCourse = () => {
                 user={{
                   name: `${student?.user?.firstName} ${student?.user?.lastName}`,
                   id: student?.userId,
-                  endpoint: `/course/${course?.id}`,
+                  endpoint: Number(course?.id),
+                  price: course?.coursePrice
                 }}
               />
             </>
@@ -310,9 +309,10 @@ const SingleCourse = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 my-10">
-        {chapterData.map((chapter, index) => (
-          <>
+      <div className="relative my-10">
+        {/* Video Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {chapterData.map((chapter, index) => (
             <ChapterCard
               key={index}
               chapter={chapter}
@@ -323,8 +323,8 @@ const SingleCourse = () => {
               videoDurations={videoDurations}
               videoRef={videoRef}
             />
-          </>
-        ))}
+          ))}
+        </div>
       </div>
 
       {totalProgress >= 100 && (
