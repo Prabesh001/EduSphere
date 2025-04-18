@@ -33,6 +33,7 @@ db.enroll = require("./enrollMentModel.js")(sequelize, DataTypes);
 db.video = require("./VideoModel.js")(sequelize, DataTypes);
 db.review = require("./ReviewModel.js")(sequelize, DataTypes);
 db.payment = require("./paymentModel.js")(sequelize, DataTypes);
+db.progress = require("./progressModel.js")(sequelize, DataTypes);
 
 sequelize
   .authenticate()

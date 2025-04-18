@@ -21,7 +21,7 @@ const CommentList = ({ comments }) => {
           </div>
           <p className="text-gray-800 dark:text-gray-300">{comment.comment}</p>
           <div className="flex items-center mt-2">
-            <span className="text-gray-600 mr-2">Rating:</span>
+            <span className="text-gray-600 dark:text-gray-400 mr-2">Rating:</span>
             <div className="flex">
               {Array.from({ length: comment.rating }, (_, index) => (
                 <span key={index} className="text-yellow-500">

@@ -10,6 +10,7 @@ const userRoute = require("./routes/userRoute");
 const passport = require("passport");
 const { users, profile } = require("./model/index");
 const generateToken = require("./services/generateToken");
+const progressRoute = require('./routes/progressRoute');
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -97,6 +98,7 @@ app.use("", authRoute);
 app.use("/teacher", courseRoute);
 app.use("", adminRoute);
 app.use("/user", userRoute);
+app.use('/progress/course', progressRoute);
 
 const port = 3000;
 app.listen(port, () => {
