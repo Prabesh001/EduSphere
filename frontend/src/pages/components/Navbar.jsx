@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { baseUrl } from "../../config";
 import axios from "axios";
 import { Avatar } from "@mui/material";
+import ConfirmLogout from "../../components/ConfirmLogout";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [teachers, setTeachers] = useState({});
   const menuRef = useRef(null);
@@ -18,7 +18,7 @@ const Navbar = () => {
       );
     }
   }, [teachers]);
-  
+
   const getAllData = async () => {
     let config = {
       headers: {
@@ -62,17 +62,6 @@ const Navbar = () => {
     };
   }, [showMenu]);
 
-  const handleLogout = () => {
-    const confirmed = window.confirm("Are you sure you want to log out?");
-
-    if (confirmed) {
-      localStorage.clear();
-      navigate("/login");
-      setShowMenu(false);
-    }
-  };
-
-  console.log(teachers);
 
   return (
     <header
@@ -147,12 +136,11 @@ const Navbar = () => {
                     >
                       View Profile
                     </Link>
-                    <Link
-                      onClick={handleLogout}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    <div
+                      className="block text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      Logout
-                    </Link>
+                      <ConfirmLogout showMenu={showMenu} setShowMenu={setShowMenu}/>
+                    </div>
                   </div>
                 )}
               </div>

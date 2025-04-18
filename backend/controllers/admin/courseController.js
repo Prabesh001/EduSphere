@@ -70,61 +70,86 @@ exports.getAllCourseCategories = async (req, res) => {
 };
 
 exports.addCourseChapter = async (req, res) => {
-  const { id: courseId } = req.params;
-  const { chapterTitle, chapterDescription, chapterStatus, chapterType } =
-    req.body;
-  const courseVideo = req.file.path;
+  try {
+    const { id: courseId } = req.params;
+    const { chapterTitle, chapterDescription, chapterStatus, chapterType } =
+      req.body;
+    const courseVideo = req.file.path;
 
-  await chapters.create({
-    chapterStatus,
-    chapterTitle,
-    chapterType,
-    chapterDescription,
-    courseId,
-    courseVideo,
-  });
-  res.status(200).json({
-    message: "Chapter created successfully",
-  });
+    await chapters.create({
+      chapterStatus,
+      chapterTitle,
+      chapterType,
+      chapterDescription,
+      courseId,
+      courseVideo,
+    });
+
+    res.status(200).json({
+      message: "Chapter created successfully",
+    });
+  } catch (error) {
+    console.error("Error creating chapter:", error);
+    res.status(500).json({
+      message: "Failed to create chapter",
+      error: error.message,
+    });
+  }
 };
 
 exports.addCourse = async (req, res) => {
-  const { courseName, courseDescription, coursePrice, courseCategoryId } =
-    req.body;
-  const userId = req.userId;
-  const courseImage = req.file.path;
+  try {
+    const { courseName, courseDescription, coursePrice, courseCategoryId } =
+      req.body;
+    const userId = req.userId;
+    const courseImage = req.file.path;
 
-  await courses.create({
-    courseName,
-    coursePrice,
-    courseImage,
-    courseDescription,
-    courseCategoryId,
-    userId,
-    isVerified: false,
-  });
+    await courses.create({
+      courseName,
+      coursePrice,
+      courseImage,
+      courseDescription,
+      courseCategoryId,
+      userId,
+      isVerified: false,
+    });
 
-  res.status(200).json({
-    message: "Course added successfully",
-  });
+    res.status(200).json({
+      message: "Course added successfully",
+    });
+  } catch (error) {
+    console.error("Error adding course:", error);
+    res.status(500).json({
+      message: "Failed to add course",
+      error: error.message,
+    });
+  }
 };
 
 exports.addComment = async (req, res) => {
-  const { comment, rating } = req.body;
-  const courseId = req.params.id;
-  const userId = req.userId;
+  try {
+    const { comment, rating } = req.body;
+    const courseId = req.params.id;
+    const userId = req.userId;
 
-  await review.create({
-    comment,
-    rating,
-    courseId,
-    userId,
-    isVerified: false,
-  });
+    await review.create({
+      comment,
+      rating,
+      courseId,
+      userId,
+      isVerified: false,
+    });
 
-  res.status(200).json({
-    message: "comment added successfully",
-  });
+    res.status(200).json({
+      message: "Comment added successfully",
+    });
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).json({
+      message: "Failed to add comment",
+      error: error.message,
+    });
+  }
 };
 
 exports.getAllComments = async (req, res) => {
@@ -274,7 +299,6 @@ exports.enrollment = async (req, res) => {
     // Verify the token to get the user's email (assuming the token contains an 'id' that is the user's email)
     const decryptedToken = jwt.verify(token, "haha");
     const userEmail = decryptedToken.id;
-
 
     // Check if the user is already enrolled in the specific course
     const existingEnrollment = await enroll.findOne({

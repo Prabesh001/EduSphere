@@ -70,7 +70,7 @@ const AddCourseForm = () => {
           nav("/teacherDashboard/getCourse");
         }
       } catch (error) {
-        toast.error(error.response || "Error adding course!");
+        toast.error(error.response?.data?.message || "Error adding course!");
         console.error("Error adding course:", error.response);
         // You can show an error message to the user
       }

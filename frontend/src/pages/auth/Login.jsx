@@ -34,11 +34,12 @@ const Login = () => {
         } else {
           navigate("/");
         }
-        toast(response.data.message);
+        toast.success(response.data.message);
         return;
       }
     } catch (error) {
-      alert(error.message);
+      console.log(error)
+      toast.error(error.response?.data?.message || "Please check your email and password!");
     }
   };
   return (

@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -21,16 +23,31 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+  
+    if (Object.values(data).some((d) => d.trim() === "")) {
+      toast.error("Cannot register with empty fields!");
+      setLoading(false);
+      return;
+    }
+  
     try {
       const response = await axios.post("http://localhost:3000/register", data);
-      console.log(response);
       if (response.status === 200) {
-        return navigate("/login");
+        toast.success("You Registered Successfully!");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
       }
     } catch (e) {
-      console.log(e);
+      toast.error(e.response?.data?.message || "Registration failed!");
+      console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
+  
+
   return (
     <>
       {/* Checkout Section: Simple Box */}
@@ -95,7 +112,7 @@ const Register = () => {
                     type="submit"
                     className="inline-flex w-full items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-6 py-3 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90"
                   >
-                    <span>Register</span>
+                    <span>{loading ? "Loading..." : "Register"}</span>
                   </button>
                 </form>
               </div>
@@ -106,10 +123,10 @@ const Register = () => {
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   <a
                     className="inline-block text-sm font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
-                    href="/forgotPassword"
+                    href="/login"
                   >
                     {" "}
-                    Forgot Password?
+                    Sign In
                   </a>
                 </p>
               </div>

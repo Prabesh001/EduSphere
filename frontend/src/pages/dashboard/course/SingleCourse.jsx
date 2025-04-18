@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config";
 import { useParams } from "react-router-dom";
 import EnrollmentTable from "./Enrollements";
+import { toast } from "react-toastify";
 
 const SingleCoursePage = () => {
   const [chapterData, setChapterData] = useState([]);
@@ -103,7 +104,7 @@ const SingleCoursePage = () => {
         }
       );
       if (response.status === 200) {
-        alert("Chapter added successfully");
+        toast.success("Chapter added successfully");
         setNewChapterData({
           chapterTitle: "",
           chapterDescription: "",
@@ -115,7 +116,7 @@ const SingleCoursePage = () => {
         getAllCourseChapterData();
       }
     } catch (error) {
-      alert(`Failed To Add Chapter! ${error}`);
+      toast.error(error?.response?.data?.message || "Error adding chapter!");
       console.error("Error adding chapter:", error);
     }
   };

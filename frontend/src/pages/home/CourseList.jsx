@@ -26,7 +26,6 @@ const CourseList = () => {
       const response = await axios.get(baseUrl + "/get-all-category");
       if (response.status === 200) {
         setCategories(response.data);
-        console.log(response.data);
       }
     } catch (error) {
       console.error("Error fetching courses:", error.response.data);
@@ -50,11 +49,10 @@ const CourseList = () => {
     setPriceRange(event.target.value);
   };
 
-  console.log(teachers);
+  console.log("categories", teachers);
 
   const renderCourseCards = () => {
     let filteredCourses = teachers;
-
     // Filter by search query
     filteredCourses = filteredCourses.filter((course) =>
       course.courseName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -63,7 +61,9 @@ const CourseList = () => {
     // Filter by category
     if (selectedCategory) {
       filteredCourses = filteredCourses.filter(
-        (course) => course?.courseCategory?.categoryName === selectedCategory
+        (course) =>
+          course?.courseCategory?.categoryName.toLowerCase().replaceAll(" ","") ===
+          selectedCategory.toLowerCase().replaceAll(" ","")
       );
     }
 
@@ -96,7 +96,7 @@ const CourseList = () => {
             <div className="font-bold text-xl mb-2 capitalize">
               {course.courseName}
             </div>
-            <p className="text-gray-700 text-base">
+            <p className="text-gray-700 dark:text-gray-300 text-base">
               {course.courseDescription}
             </p>
           </div>

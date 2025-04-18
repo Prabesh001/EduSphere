@@ -45,18 +45,18 @@ exports.loginUser = async (req, res) => {
     if (isMatched) {
       const token = generateToken(userEmailFound[0]);
       res.status(200).json({
-        message: "Logged in sucsess",
+        message: "Logged in successfully!",
         token,
         data: userEmailFound[0],
       });
     } else {
       res.status(400).json({
-        message: "invalid password",
+        message: "Invalid Password",
       });
     }
   } else {
     res.status(400).json({
-      message: "Noone registered with this email",
+      message: "No user found registered with this email",
     });
   }
 };

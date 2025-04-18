@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-confirm-alert-overlay {
+  background: #0000008c !important;
+}

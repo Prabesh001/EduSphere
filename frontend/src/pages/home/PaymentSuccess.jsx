@@ -44,7 +44,7 @@ export default function PaymentSuccessPage() {
         });
         toast.success(response.data.message);
       } catch (error) {
-        toast.error(error.response?.data?.message || "Enrollment failed");
+        console.error(error.response?.data?.message || "Enrollment failed");
       }
     }
   };
