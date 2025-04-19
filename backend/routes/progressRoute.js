@@ -10,21 +10,40 @@ router.post('/', isAuthenticated, async (req, res) => {
   const user_id = req.user.id;
 
   try {
-    const [entry, created] = await progressModel.findOrCreate({
+    const existing = await progressModel.findOne({
       where: { user_id, course_id, chapter_id },
-      defaults: { progress }
     });
 
-    if (!created) {
-      entry.progress = progress;
-      await entry.save();
+    if (existing) {
+      if (parseFloat(progress) > parseFloat(existing.progress)) {
+        existing.progress = progress;
+        await existing.save();
+        return res
+          .status(200)
+          .json({ message: 'Progress updated', data: existing });
+      } else {
+        return res
+          .status(200)
+          .json({ message: 'No update needed; progress is not higher', data: existing });
+      }
     }
 
-    res.status(200).json({ message: created ? 'Progress created' : 'Progress updated', data: entry });
+    const newProgress = await progressModel.create({
+      user_id,
+      course_id,
+      chapter_id,
+      progress,
+    });
+
+    return res
+      .status(201)
+      .json({ message: 'Progress created', data: newProgress });
+
   } catch (error) {
     res.status(500).json({ error: 'Failed to save progress', details: error.message });
   }
 });
+
 
 // GET: Get all progress for authenticated user
 router.get('/', isAuthenticated, async (req, res) => {
@@ -41,22 +60,43 @@ router.get('/', isAuthenticated, async (req, res) => {
   }
 });
 
-// PATCH: Update progress for a course and chapter
-router.patch('/course/:id', isAuthenticated, async (req, res) => {
-  const progressId = req.params.id;
-  const { course_id, chapter_id, progress } = req.body;
+// router.patch("/course/:id", isAuthenticated, async (req, res) => {
+//   const progressId = req.params.id;
+//   const { course_id, chapter_id, progress: newProgress } = req.body;
 
-  try {
-    const updated = await db('progress')
-      .where('id', progressId)
-      .update({ course_id, chapter_id, progress, updated_at: new Date() });
+//   try {
+//     const entry = await progressModel.findOne({
+//       where: { id: progressId, user_id: req.user.id },
+//     });
 
-    res.status(200).json({ message: "Progress updated", updated });
-  } catch (error) {
-    console.error("PATCH error:", error);
-    res.status(500).json({ error: "Failed to update progress" });
-  }
-});
+//     if (!entry) {
+//       return res.status(404).json({ error: "Progress entry not found" });
+//     }
 
+//     const currentProgress = parseFloat(entry.progress);
+//     const updatedProgress = parseFloat(newProgress);
+
+//     if (updatedProgress > currentProgress) {
+//       entry.course_id = course_id;
+//       entry.chapter_id = chapter_id;
+//       entry.progress = updatedProgress;
+//       entry.updated_at = new Date();
+//       await entry.save();
+
+//       return res.status(200).json({
+//         message: "Progress updated",
+//         newProgress: entry.progress,
+//       });
+//     } else {
+//       return res.status(200).json({
+//         message: "No update needed; current progress is higher",
+//         currentProgress,
+//       });
+//     }
+//   } catch (error) {
+//     console.error("PATCH error:", error);
+//     res.status(500).json({ error: "Failed to update progress", details: error.message });
+//   }
+// });
 
 module.exports = router;

@@ -1,12 +1,10 @@
-/* eslint-disable no-unused-vars */
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { baseUrl } from "../../config";
 import axios from "axios";
 import { toast } from "react-toastify";
 import RatingModal from "./RatingModal";
 import CommentList from "./RatingList";
-// import { Chip } from "@mui/material";
 import EsewaPayment from "./EsewaPayment";
 import Certificate from "./Certificate";
 import ChapterCard from "../../components/ChapterCard";
@@ -18,7 +16,6 @@ const SingleCourse = () => {
   const [comment, setComment] = useState(null);
   const [chapterData, setChapterData] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
-  const videoRef = useRef(null);
   const [totalVideoLength, setTotalVideoLength] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [chapId, setChapId] = useState(null);
@@ -27,16 +24,23 @@ const SingleCourse = () => {
   const [videoDurations, setVideoDurations] = useState([]);
   const [enrolledId, setEnrolledId] = useState([]);
   const [enrolled, setEnrolled] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [student, setStudent] = useState({});
 
+  const videoRefs = useRef([]);
+
+  console.log("comment", comment);
+
+  const token = localStorage.getItem("token");
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+
   const getAllData = async () => {
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-      },
-    };
+    setIsLoading(true);
     try {
       const response = await axios.get(baseUrl + "/user/profile", config);
       if (response.status === 200) {
@@ -44,32 +48,36 @@ const SingleCourse = () => {
       }
     } catch (error) {
       console.error("Error fetching courses:", error.response.data);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
-      const duration = videoRef.current.duration;
+  const handleTimeUpdate = (index) => {
+    const videoElement = videoRefs.current[index]?.current;
+    if (videoElement) {
+      setCurrentTime(videoElement.currentTime);
+      const duration = videoElement.duration;
       setTotalVideoLength(duration);
     }
   };
 
-  const handlePlay = (chapterId) => {
+  const handlePlay = (chapterId, index) => {
     setChapId(chapterId);
     const storedProgress = localStorage.getItem(
       `video_progress_${id}_${chapterId}`
     );
-    if (storedProgress !== null && videoRef.current) {
+    if (storedProgress !== null && videoRefs.current[index]) {
       setVideoProgress((prevProgress) => ({
         ...prevProgress,
         [chapterId]: parseFloat(storedProgress),
       }));
-      videoRef.current.currentTime = parseFloat(storedProgress);
+      videoRefs.current[index].currentTime = parseFloat(storedProgress);
     }
   };
 
   const fetchData = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(baseUrl + "/user/courses/" + id);
       if (response.status === 200) {
@@ -77,6 +85,8 @@ const SingleCourse = () => {
       }
     } catch (error) {
       console.error("Error fetching course:", error.response?.data);
+    } finally {
+      setIsLoading(false);
     }
   }, [id]);
 
@@ -91,11 +101,12 @@ const SingleCourse = () => {
         setComment(response.data);
       }
     } catch (error) {
-      // console.error("Error fetching comments:", error.response?.data);
+      console.error("Error fetching comments:", error.response?.data);
     }
   }, [id]);
 
   const getAllCourseChapterData = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         `${baseUrl}/user/course-chapters/${id}`,
@@ -110,12 +121,15 @@ const SingleCourse = () => {
       }
     } catch (error) {
       console.error("Error fetching course chapters:", error);
+    } finally {
+      setIsLoading(false);
     }
   }, [id]);
 
   const handleEnroll = async (e) => {
     e.preventDefault();
     if (localStorage.getItem("token")) {
+      setIsLoading(true);
       try {
         const response = await axios.get(baseUrl + "/user/enroll/" + id, {
           headers: {
@@ -125,34 +139,28 @@ const SingleCourse = () => {
         toast.success(response.data.message);
       } catch (error) {
         toast.error(error.response?.data?.message || "Enrollment failed");
+      } finally {
+        setIsLoading(false);
       }
     }
   };
 
   const getEnroll = useCallback(async () => {
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-      },
-    };
+    setIsLoading(true);
     try {
       const response = await axios.get(baseUrl + "/user/getId/" + id, config);
       if (response.status === 200) {
         setEnrolledId(response.data.data[0]?.id);
       }
     } catch (error) {
-      // console.error("Error fetching enrollment ID:", error.response?.data);
+      console.error("Error fetching enrollment ID:", error.response?.data);
+    } finally {
+      setIsLoading(false);
     }
   }, [id]);
 
   const getAllDataEnroll = useCallback(async () => {
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-      },
-    };
+    setIsLoading(true);
     try {
       const response = await axios.get(
         baseUrl + "/user/enrolled-course",
@@ -162,7 +170,9 @@ const SingleCourse = () => {
         setEnrolled(response.data);
       }
     } catch (error) {
-      // console.error("Error fetching enrolled courses:", error.response?.data);
+      console.error("Error fetching enrolled courses:", error.response?.data);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -181,39 +191,10 @@ const SingleCourse = () => {
   ]);
 
   useEffect(() => {
-    const loadedVideoProgress = {};
-    chapterData.forEach((chapter) => {
-      const storedProgress = localStorage.getItem(
-        `video_progress_${id}_${chapter.id}`
-      );
-      if (storedProgress !== null) {
-        loadedVideoProgress[chapter.id] = parseFloat(storedProgress);
-      }
-    });
-    setVideoProgress(loadedVideoProgress);
+    getAllData();
+  }, []);
 
-    const totalWatchedDuration = Object.values(loadedVideoProgress).reduce(
-      (acc, progress) => acc + progress,
-      0
-    );
-
-    const progressPercentage =
-      totalWatchedDuration !== 0
-        ? (totalWatchedDuration / totalVideoLength) * 100
-        : 0;
-    setTotalProgress(progressPercentage.toFixed(2));
-    localStorage.setItem(
-      `video_progress_profile${id}`,
-      progressPercentage.toFixed(2)
-    );
-  }, [chapterData, id, totalVideoLength]);
-
-  useEffect(() => {
-    if (chapId) {
-      localStorage.setItem(`video_progress_${id}_${chapId}`, currentTime);
-    }
-  }, [currentTime, id, chapId]);
-
+  // Update video duration fetching logic
   useEffect(() => {
     const fetchVideoDurations = async () => {
       try {
@@ -245,9 +226,43 @@ const SingleCourse = () => {
     }
   }, [chapterData, id]);
 
+  const [chapterProgress, setChapterProgress] = useState([]);
+
   useEffect(() => {
-    getAllData();
+    const getChapterProgress = async () => {
+      try {
+        const res = await axios.get(`${baseUrl}/progress/course`, config);
+        const result = res.data;
+        setChapterProgress(result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getChapterProgress();
   }, []);
+
+  useEffect(() => {
+    if (
+      chapterData.length > 0 &&
+      chapterProgress.length > 0 &&
+      videoDurations.length === chapterData.length
+    ) {
+      let totalPercent = 0;
+
+      chapterData.forEach((chapter, index) => {
+        const progressRecord = chapterProgress.find(
+          (p) => p.chapter_id === chapter.id
+        );
+        const watchedSeconds = progressRecord?.progress || 0;
+        const videoDuration = videoDurations[index] || 1;
+        const percent = Math.min((watchedSeconds / videoDuration) * 100, 100);
+        totalPercent += percent;
+      });
+
+      const avgPercent = totalPercent / chapterData.length;
+      setTotalProgress(avgPercent.toFixed(2));
+    }
+  }, [chapterProgress, chapterData, videoDurations, totalProgress]);
 
   if (!course) {
     return <div className="text-center py-10">Loading course details...</div>;
@@ -259,100 +274,113 @@ const SingleCourse = () => {
 
   return (
     <div className="max-w-4xl p-4 lg:p-0 mx-auto mt-10">
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 md:pr-4 mb-4">
-          {course.courseImage && (
-            <img
-              src={baseUrl + "/" + course.courseImage}
-              alt={course.courseName}
-              className="w-full h-auto object-cover rounded-md shadow-lg"
+      {isLoading ? (
+        <p className="min-h-[50vh] flex justify-center items-center">
+          Loading course...
+        </p>
+      ) : (
+        <>
+          <div className="flex flex-wrap">
+            <div className="w-full md:w-1/2 md:pr-4 mb-4">
+              {course.courseImage && (
+                <img
+                  src={baseUrl + "/" + course.courseImage}
+                  alt={course.courseName}
+                  className="w-full h-auto object-cover rounded-md shadow-lg"
+                />
+              )}
+            </div>
+            <div className="w-full md:w-1/2 md:pl-4 mb-4">
+              <h2 className="text-3xl font-bold mb-4 capitalize">
+                {course.courseName}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-4 capitalize">
+                {course.courseDescription}
+              </p>
+              <p className="text-gray-400 font-bold mb-2">
+                Price: Rs. {course.coursePrice}
+              </p>
+
+              {filterEnrolled && filterEnrolled[0] ? (
+                <Chip variant="filled" color="success" label="Enrolled" />
+              ) : course?.coursePrice > 0 ? (
+                <>
+                  <EsewaPayment
+                    amount={course.coursePrice}
+                    user={{
+                      name: `${student?.user?.firstName} ${student?.user?.lastName}`,
+                      id: student?.userId,
+                      endpoint: Number(course?.id),
+                      price: course?.coursePrice,
+                    }}
+                  />
+                </>
+              ) : (
+                <button
+                  onClick={handleEnroll}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Enroll Now
+                </button>
+              )}
+
+              <p className="mt-2">
+                Total Progress: {totalProgress > 100 ? 100 : totalProgress || 0}
+                %
+              </p>
+            </div>
+          </div>
+
+          <div className="relative my-10">
+            {/* Video Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {chapterData.map((chapter, index) => (
+                <ChapterCard
+                  key={index}
+                  chapter={chapter}
+                  index={index}
+                  filterEnrolled={filterEnrolled}
+                  handlePlay={(chapterId) => handlePlay(chapterId, index)}
+                  handleTimeUpdate={() => handleTimeUpdate(index)}
+                  videoDurations={videoDurations}
+                  videoRef={videoRefs.current[index] || React.createRef()} // Use the correct ref for each video
+                  chProgress={
+                    chapterProgress?.find(
+                      (ch) => ch?.chapter_id === chapter?.id
+                    )?.progress || 0
+                  }
+                  config={config}
+                  courseId={id}
+                />
+              ))}
+            </div>
+          </div>
+
+          {totalProgress >= 100 && (
+            <Certificate
+              studentName={`${student?.user?.firstName} ${student?.user?.lastName}`}
+              courseName={course?.courseName}
+              completionDate={new Date().toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             />
           )}
-        </div>
-        <div className="w-full md:w-1/2 md:pl-4 mb-4">
-          <h2 className="text-3xl font-bold mb-4 capitalize">
-            {course.courseName}
-          </h2>
-          <p className="text-gray-600 mb-4 capitalize">
-            {course.courseDescription}
-          </p>
-          <p className="text-gray-400 font-bold mb-2">
-            Price: ${course.coursePrice}
-          </p>
 
-          {filterEnrolled && filterEnrolled[0] ? (
-            <Chip variant="filled" color="success" label="Enrolled" />
-          ) : course?.coursePrice > 0 ? (
-            <>
-              <EsewaPayment
-                amount={course.coursePrice}
-                user={{
-                  name: `${student?.user?.firstName} ${student?.user?.lastName}`,
-                  id: student?.userId,
-                  endpoint: Number(course?.id),
-                  price: course?.coursePrice
-                }}
-              />
-            </>
-          ) : (
-            <button
-              onClick={handleEnroll}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Enroll Now
-            </button>
+          <button
+            onClick={() => setShowModal(!showModal)}
+            className="mt-6 px-6 py-3 mb-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors"
+          >
+            Add Rating
+          </button>
+
+          {showModal && (
+            <RatingModal setShowModal={setShowModal} courseId={id} />
           )}
-
-          <p className="mt-2">
-            Total Progress: {totalProgress > 100 ? 100 : totalProgress || 0}%
-          </p>
-        </div>
-      </div>
-
-      <div className="relative my-10">
-        {/* Video Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {chapterData.map((chapter, index) => (
-            <ChapterCard
-              key={index}
-              chapter={chapter}
-              index={index}
-              filterEnrolled={filterEnrolled}
-              handlePlay={handlePlay}
-              handleTimeUpdate={handleTimeUpdate}
-              videoDurations={videoDurations}
-              videoRef={videoRef}
-            />
-          ))}
-        </div>
-      </div>
-
-      {totalProgress >= 100 && (
-        <Certificate
-          studentName={`${student?.user?.firstName} ${student?.user?.lastName}`}
-          courseName={course?.courseName}
-          completionDate={new Date().toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        />
+          <CommentList comments={comment} />
+        </>
       )}
-
-      <button
-        onClick={() => setShowModal(!showModal)}
-        className="mt-6 px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors"
-      >
-        Add Rating
-      </button>
-
-      {showModal && (
-        <RatingModal
-          fetchDataComment={fetchDataComment}
-          onClose={() => setShowModal(false)}
-        />
-      )}
-      <CommentList comments={comment} />
     </div>
   );
 };

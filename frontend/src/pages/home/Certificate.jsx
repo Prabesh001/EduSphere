@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import domtoimage from "dom-to-image";
+import logo from "/image.svg";
 import signature from "/signature.png";
 
 const Certificate = ({
@@ -53,20 +54,34 @@ const Certificate = ({
       <div
         ref={certificateRef}
         className="w-[1123px] h-[794px] bg-white border-[8px] border-amber-600 p-10"
-        style={{ fontFamily: "'Times New Roman', Times, serif" }}
+        style={{
+          fontFamily: "'Times New Roman', Times, serif",
+        }}
       >
-        <div className="h-full border-[4px] border-amber-500 flex flex-col justify-center items-center text-black">
-          <h1 className="text-4xl font-bold text-amber-800 mb-4">
+        <div className="h-full border-[4px] border-amber-500 flex flex-col justify-center items-center text-black relative">
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-10"
+            style={{
+              backgroundImage: `url(${logo})`,
+              backgroundSize: "50%",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
+
+          <h1 className="text-4xl font-bold text-amber-800 mb-4 z-10">
             Certificate of Completion
           </h1>
-          <p className="text-xl">This is proudly presented to</p>
-          <h2 className="text-3xl font-bold my-2 capitalize">{studentName}</h2>
-          <p className="text-xl">for successfully completing</p>
-          <h3 className="text-2xl capitalize italic text-blue-700 font-semibold my-2">
+          <p className="text-xl z-10">This is proudly presented to</p>
+          <h2 className="text-3xl font-bold my-2 capitalize z-10">
+            {studentName}
+          </h2>
+          <p className="text-xl z-10">for successfully completing</p>
+          <h3 className="text-2xl capitalize italic text-blue-700 font-semibold my-2 z-10">
             &quot;{courseName}&quot;
           </h3>
-          <p className="mt-4">Date of Completion</p>
-          <p>{completionDate}</p>
+          <p className="mt-4 z-10">Date of Completion</p>
+          <p className="z-10">{completionDate}</p>
           <div className="mt-12 text-right self-end pr-20">
             <img
               src={signature}

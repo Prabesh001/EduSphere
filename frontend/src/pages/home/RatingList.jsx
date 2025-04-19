@@ -1,5 +1,3 @@
-// CommentList.js
-
 import { Avatar } from "@mui/material";
 import { baseUrl } from "../../config";
 

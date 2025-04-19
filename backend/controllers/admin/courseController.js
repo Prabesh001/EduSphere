@@ -227,7 +227,7 @@ exports.updateCourse = async (req, res) => {
     const { id } = req.params;
     const { courseName, courseDescription, coursePrice, courseCategoryId } =
       req.body;
-    const courseImage = req.file.path;
+    const courseImage = req.file?.path;
 
     const updatedCourse = await courses.update(
       {

@@ -70,7 +70,7 @@ const CourseList = () => {
     // Filter by price range
     if (priceRange === "free") {
       filteredCourses = filteredCourses.filter(
-        (course) => course.coursePrice === 0
+        (course) => Number(course.coursePrice) === 0
       );
     } else if (priceRange === "paid") {
       filteredCourses = filteredCourses.filter(
@@ -81,19 +81,21 @@ const CourseList = () => {
     return filteredCourses.map((course) => (
       <div
         key={course.id}
-        className="max-w-full rounded overflow-hidden shadow-2xl "
+        className="max-w-full rounded overflow-hidden shadow-2xl"
       >
-        <Link to={"/course/" + course.id}>
+        <Link to={"/course/" + course.id} className="flex flex-col gap-y-3 mb-3">
           {/* Course Image */}
-          <img
-            className=" h-[300px] w-full object-cover"
-            src={baseUrl + "/" + course.courseImage}
-            alt="Course"
-          />
+          <div>
+            <img
+              className="h-[300px] w-full object-cover"
+              src={baseUrl + "/" + course.courseImage}
+              alt="Course"
+            />
+          </div>
 
           {/* Course Details */}
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2 capitalize">
+          <div className="px-6">
+            <div className="font-bold text-xl mb-1 capitalize">
               {course.courseName}
             </div>
             <p className="text-gray-700 dark:text-gray-300 text-base">
@@ -102,9 +104,9 @@ const CourseList = () => {
           </div>
 
           {/* Price */}
-          <div className="px-6 py-4">
+          <div className="px-6">
             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-              Price: ${course.coursePrice}
+              Price: Rs. {course.coursePrice}
             </span>
           </div>
         </Link>

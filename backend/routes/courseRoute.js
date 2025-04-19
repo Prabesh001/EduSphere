@@ -93,7 +93,7 @@ router
   .patch(
     imageUpload.single("courseImage"),
     isAuthenticated,
-    restrictTo("admin"),
+    restrictTo("teacher"),
     updateCourse
   );
 router
