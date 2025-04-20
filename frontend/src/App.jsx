@@ -40,7 +40,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ToastContainer />
+      <ToastContainer/>
       <PaymentContext.Provider value={{ isPaying, setIsPaying }}>
         <Routes>
           <Route

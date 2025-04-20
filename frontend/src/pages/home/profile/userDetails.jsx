@@ -22,7 +22,7 @@ const UserDetails = ({ teachers, getAllData }) => {
       }
     );
     if (response.status === 200) {
-      toast("success", response.data.message);
+      toast.success("success", response.data.message);
       getAllData();
     }
   };

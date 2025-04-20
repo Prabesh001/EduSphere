@@ -27,7 +27,7 @@ const RatingModal = ({ onClose, fetchDataComment }) => {
       }
     );
     if (response.status === 200) {
-      toast("success", response.data.message);
+      toast.success("success", response.data.message);
       fetchDataComment();
     }
     onClose(); // Close the modal after submission

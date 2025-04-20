@@ -3,6 +3,7 @@ import { jsPDF } from "jspdf";
 import domtoimage from "dom-to-image";
 import logo from "/image.svg";
 import signature from "/signature.png";
+import { toast } from "react-toastify";
 
 const Certificate = ({
   studentName,
@@ -41,9 +42,10 @@ const Certificate = ({
 
       pdf.addImage(dataUrl, "PNG", 0, 0, pdfWidth, pdfHeight);
       pdf.save(`${studentName}-${courseName}-certificate.pdf`);
+      toast.success("Congratulations 🎉")
     } catch (error) {
       console.error("Error generating PDF:", error);
-      alert("Failed to generate PDF.");
+      toast.error("Failed to generate PDF.");
     } finally {
       setIsGenerating(false);
     }

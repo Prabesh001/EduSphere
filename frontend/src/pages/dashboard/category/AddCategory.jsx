@@ -28,7 +28,7 @@ const AddCategory = () => {
         config
       );
       if (response.status === 200) {
-        toast("success", response.data.message);
+        toast.success("success", response.data.message);
         nav("/dashboard/categories");
       }
       console.log("Teacher added successfully:", response.data);

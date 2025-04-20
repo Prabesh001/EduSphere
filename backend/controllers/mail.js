@@ -4,11 +4,12 @@ async function sendEmail(recipientEmail, resetLink) {
   console.log(recipientEmail, "hehe");
   // Create a transporter
   const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
+    service: "gmail",
+    pool: true,
+    maxConnections: 20,
     auth: {
-      user: "candace.berge13@ethereal.email",
-      pass: "5Y5YPV3G3x1thu9Z2x",
+      user: "jansujerry12@gmail.com",
+      pass: "password",
     },
   });
 
@@ -21,7 +22,7 @@ async function sendEmail(recipientEmail, resetLink) {
     html:
       '<p>Here is your password reset link: <a href="' +
       resetLink +
-      '">Reset Password</a></p>', // HTML body content
+      '" target="_blank">Reset Password</a></p>', // HTML body content
   };
 
   // Send email

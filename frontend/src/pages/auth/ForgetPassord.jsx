@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -20,10 +21,10 @@ const Login = () => {
     try {
       const response = await axios.post("http://localhost:3000/request", data);
       if (response.data.status === 200) {
-        toast(response.data.message);
+        toast.success(response.data.message);
       }
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   return (
@@ -79,9 +80,9 @@ const Login = () => {
                   </div>
 
                   <div>
-                    <div className="mb-5 flex items-center justify-between space-x-2">
-                      {/* <label className="flex items-center"> */}
-                      {/* <input
+                    {/* <div className="mb-5 flex items-center justify-between space-x-2"> */}
+                    {/* <label className="flex items-center"> */}
+                    {/* <input
                         type="checkbox"
                         id="remember_me"
                         name="remember_me"
@@ -89,7 +90,7 @@ const Login = () => {
                       />
                       <span className="ml-2 text-sm">Remember me</span>
                     </label> */}
-                    </div>
+                    {/* </div> */}
                     <button
                       type="submit"
                       className="inline-flex w-full items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-6 py-3 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90"
@@ -107,10 +108,18 @@ const Login = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span>Sign In</span>
+                      <span>Submit Email</span>
                     </button>
                   </div>
                 </form>
+                <fieldset className="border-t-2 border-t-slate-400 dark:border-gray-700 mt-2">
+                  <legend className="text-center px-3">OR</legend>
+                </fieldset>
+                <div className="w-full text-center mt-2">
+                  <Link to={"/login"} className="text-blue-4text-sm font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300">
+                    Login
+                  </Link>
+                </div>
               </div>
             </div>
             {/* END Sign In Form */}

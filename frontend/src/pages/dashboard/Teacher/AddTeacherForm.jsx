@@ -36,7 +36,7 @@ const AddTeacherAdminForm = () => {
       console.log("Teacher added successfully:", response.data);
       if (response.status === 200) {
         nav("/dashboard/teachers");
-        toast(response.data.message);
+        toast.success(response.data.message);
       }
       // You can show a success message or redirect the user to another page
     } catch (error) {
