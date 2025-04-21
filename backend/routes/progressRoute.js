@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { isAuthenticated } = require('../middleware/isAuthenticated');
-const db = require('../model');
+const { isAuthenticated } = require("../middleware/isAuthenticated");
+const db = require("../model");
 const progressModel = db.progress;
 
 // POST: Create or update progress
-router.post('/', isAuthenticated, async (req, res) => {
-  const { course_id, chapter_id, progress } = req.body;
+router.post("/", isAuthenticated, async (req, res) => {
+  const { course_id, chapter_id, progress, video_durations } = req.body;
   const user_id = req.user.id;
 
   try {
@@ -20,11 +20,14 @@ router.post('/', isAuthenticated, async (req, res) => {
         await existing.save();
         return res
           .status(200)
-          .json({ message: 'Progress updated', data: existing });
+          .json({ message: "Progress updated", data: existing });
       } else {
         return res
           .status(200)
-          .json({ message: 'No update needed; progress is not higher', data: existing });
+          .json({
+            message: "No update needed; progress is not higher",
+            data: existing,
+          });
       }
     }
 
@@ -33,30 +36,33 @@ router.post('/', isAuthenticated, async (req, res) => {
       course_id,
       chapter_id,
       progress,
+      video_durations,
     });
 
     return res
       .status(201)
-      .json({ message: 'Progress created', data: newProgress });
-
+      .json({ message: "Progress created", data: newProgress });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to save progress', details: error.message });
+    res
+      .status(500)
+      .json({ error: "Failed to save progress", details: error.message });
   }
 });
 
-
 // GET: Get all progress for authenticated user
-router.get('/', isAuthenticated, async (req, res) => {
+router.get("/", isAuthenticated, async (req, res) => {
   const user_id = req.user.id;
 
   try {
     const progress = await progressModel.findAll({
-      where: { user_id }
+      where: { user_id },
     });
 
     res.status(200).json(progress);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch progress', details: error.message });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch progress", details: error.message });
   }
 });
 

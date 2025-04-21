@@ -14,14 +14,20 @@ const ChapterCard = ({
   courseId,
   token,
 }) => {
-  console.log(chapter)
+  console.log(chapter);
   const intervalRef = useRef(null);
   const isEnrolled = filterEnrolled?.length > 0;
 
   const startSync = () => {
     if (!intervalRef.current) {
       intervalRef.current = setInterval(() => {
-        syncProgress({ videoRef, chapterId: chapter?.id, courseId, token });
+        syncProgress({
+          videoRef,
+          chapterId: chapter?.id,
+          courseId,
+          token,
+          videoDurations: videoDurations[index],
+        });
       }, 10000);
     }
   };
@@ -35,7 +41,13 @@ const ChapterCard = ({
 
   useEffect(() => {
     const handlePauseOrEnd = () => {
-      syncProgress({ videoRef, chapterId: chapter.id, courseId, token });
+      syncProgress({
+        videoRef,
+        chapterId: chapter.id,
+        courseId,
+        token,
+        videoDurations: videoDurations[index],
+      });
       stopSync();
     };
 
@@ -53,7 +65,7 @@ const ChapterCard = ({
       }
       stopSync();
     };
-  }, [videoRef, chapter.id, courseId, token]);
+  }, [videoRef, chapter.id, courseId, token, videoDurations, index]);
 
   return (
     <div key={chapter.id} className="bg-white p-4 rounded-lg shadow-lg">
@@ -84,9 +96,7 @@ const ChapterCard = ({
       </p>
       <p className="text-gray-600">
         Type:{" "}
-        <span className="capitalize text-gray-900">
-          {chapter.chapterType}
-        </span>
+        <span className="capitalize text-gray-900">{chapter.chapterType}</span>
       </p>
       <p className="text-gray-600">
         Progress:{" "}

@@ -29,8 +29,6 @@ const SingleCourse = () => {
 
   const videoRefs = useRef([]);
 
-  console.log("comment", comment);
-
   const token = localStorage.getItem("token");
   const config = {
     headers: {

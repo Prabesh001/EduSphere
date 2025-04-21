@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 
 let isSyncing = false;
 
-export const syncProgress = async ({ videoRef, chapterId, courseId }) => {
+export const syncProgress = async ({
+  videoRef,
+  chapterId,
+  courseId,
+  videoDurations,
+}) => {
   const token = localStorage.getItem("token");
   if (!videoRef?.current || isSyncing) return;
 
@@ -18,6 +23,7 @@ export const syncProgress = async ({ videoRef, chapterId, courseId }) => {
         course_id: courseId,
         chapter_id: chapterId,
         progress: currentTime,
+        video_durations: videoDurations,
       },
       {
         headers: {
