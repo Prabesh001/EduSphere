@@ -1,6 +1,6 @@
-# EduSphere
+# Shikshyala 
 
-EduSphere is a full-stack web-based learning management system built using the MERN stack. It provides a platform for students to enroll in courses and track their learning progress, while instructors can manage content, monitor student activity, and engage learners through multimedia lessons and interactive assessments.
+Shikshyala is a full-stack web-based learning management system built using the MERN stack. It provides a platform for students to enroll in courses and track their learning progress, while instructors can manage content, monitor student activity, and engage learners through multimedia lessons and interactive assessments.
 
 ## Features
 
@@ -73,7 +73,7 @@ The frontend will run on `http://localhost:3000` and the backend on `http://loca
 ## Folder Structure
 
 ```
-edusphere/
+Shikshyala/
 ├── backend/
 │   ├── controllers/
 │   ├── models/
