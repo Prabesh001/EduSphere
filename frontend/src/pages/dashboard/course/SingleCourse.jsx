@@ -19,8 +19,6 @@ const SingleCoursePage = () => {
 
   const { id } = useParams();
 
-  console.log(course)
-
   const getAllCategoryData = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/teacher/get-course/${id}`, {

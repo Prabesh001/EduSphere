@@ -4,13 +4,11 @@ const bcrypt = require("bcrypt");
 
 exports.registerTeacher = async (req, res) => {
   const { firstName, lastName, email } = req.body;
-  console.log(req.body);
   const [userFound] = await users.findAll({
     where: {
       email,
     },
   });
-  console.log(userFound);
   if (userFound) {
     return res.status(400).json({
       message: "User already exist",
@@ -99,7 +97,6 @@ exports.getDashboardData = async (req, res) => {
         },
       ],
     });
-    console.log(coursesWithEnrollmentCount, "Enrollment count");
 
     // Get total course count
     const totalCourseCount = await coursesWithEnrollmentCount.length;

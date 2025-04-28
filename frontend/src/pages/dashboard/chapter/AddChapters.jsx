@@ -21,7 +21,6 @@ const AddChapter = () => {
     e.preventDefault();
     const response = await axios.post(`${baseUrl}chapter`, data);
   };
-  console.log(data);
   return (
     <div
       id="page-container"

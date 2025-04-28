@@ -38,7 +38,6 @@ const Login = () => {
         return;
       }
     } catch (error) {
-      console.log(error)
       toast.error(error.response?.data?.message || "Please check your email and password!");
     }
   };
@@ -68,7 +67,7 @@ const Login = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span>EduSphere</span>
+                <span>Shikshyalaya</span>
               </h1>
               <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">
                 Welcome, please sign in to your dashboard

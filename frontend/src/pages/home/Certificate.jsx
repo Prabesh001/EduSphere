@@ -10,7 +10,7 @@ const Certificate = ({
   studentName,
   courseName,
   completionDate,
-  instructor = "EduSphere Nepal",
+  instructor = "Shikshyalaya Nepal",
 }) => {
   const certificateRef = useRef();
   const [isGenerating, setIsGenerating] = useState(false);

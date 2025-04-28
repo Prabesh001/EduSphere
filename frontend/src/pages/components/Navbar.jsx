@@ -88,7 +88,7 @@ const Navbar = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <span>Edusphere</span>
+            <span>Shikshyalaya</span>
           </Link>
         </div>
         <div>

@@ -18,7 +18,6 @@ exports.isAuthenticated = async (req, res, next) => {
       id: decryptedResult.id,
     },
   });
-  console.log(userExist, "userExist")
 
   //check if length is zero or not(zero->userExist gardaina)
   if (userExist.length == 0) {

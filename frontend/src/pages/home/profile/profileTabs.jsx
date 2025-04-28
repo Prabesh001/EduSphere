@@ -50,8 +50,6 @@ const CompletedCourses = ({ courses }) => {
     getChapterProgress();
   }, []);
 
-  console.log("ch", chapterProgress);
-
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">Courses Completions</h2>

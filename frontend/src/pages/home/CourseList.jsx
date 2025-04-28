@@ -49,8 +49,6 @@ const CourseList = () => {
     setPriceRange(event.target.value);
   };
 
-  console.log("categories", teachers);
-
   const renderCourseCards = () => {
     let filteredCourses = teachers;
     // Filter by search query

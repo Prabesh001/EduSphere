@@ -14,7 +14,6 @@ const ChapterCard = ({
   courseId,
   token,
 }) => {
-  console.log(chapter);
   const intervalRef = useRef(null);
   const isEnrolled = filterEnrolled?.length > 0;
 

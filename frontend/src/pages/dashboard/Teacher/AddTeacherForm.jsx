@@ -33,7 +33,6 @@ const AddTeacherAdminForm = () => {
         formData,
         config
       );
-      console.log("Teacher added successfully:", response.data);
       if (response.status === 200) {
         nav("/dashboard/teachers");
         toast.success(response.data.message);

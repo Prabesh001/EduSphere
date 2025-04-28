@@ -53,7 +53,7 @@ const Login = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span>Edusphere</span>
+                <span>Shikshyalaya</span>
               </h1>
               <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">
                 Welcome, please sign in to your dashboard

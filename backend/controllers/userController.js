@@ -111,7 +111,6 @@ exports.addPayment = async (req, res) => {
 exports.getEnrollments = async (req, res) => {
   const userId = req.userId;
   const { courseId } = req.params;
-  console.log(courseId)
 
   try {
     const enrollments = await enroll.findAll({
@@ -120,7 +119,6 @@ exports.getEnrollments = async (req, res) => {
         courseId: courseId,
       },
     });
-    console.log(enrollments, "sda")
 
     if (enrollments.length > 0) {
       res.json({

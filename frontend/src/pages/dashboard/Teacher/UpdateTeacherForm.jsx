@@ -32,7 +32,6 @@ const UpdateTeacherAdminForm = () => {
         formData,
         config
       );
-      console.log("Teacher added successfully:", response.data);
       // You can show a success message or redirect the user to another page
     } catch (error) {
       console.error("Error adding teacher:", error.response.data);

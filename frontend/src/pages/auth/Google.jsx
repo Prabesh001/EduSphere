@@ -5,7 +5,6 @@ const Google = () => {
     const queryParams = new URLSearchParams(location.search)
     const navigate = useNavigate()
     const token = queryParams.get("token")
-    console.log(token)  
     const [loading,setLoading] = useState(true)
 
 useEffect(()=>{

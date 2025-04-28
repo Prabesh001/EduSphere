@@ -28,13 +28,11 @@ const ChangePassword = () => {
         { ...data, email: type }
       );
       if (response.data.status === 200) {
-        console.log("Password saved successfully");
         toast.success(response.data.message || "Request sent successfully!");
         navigate("/login");
       }
     } catch (error) {
       toast.error(error?.data?.message);
-      console.log("message", error?.data?.message);
     }
   };
   return (
@@ -64,7 +62,7 @@ const ChangePassword = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span> Edusphere</span>
+                  <span> Shikshyalaya</span>
                 </Link>
               </h1>
               <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">

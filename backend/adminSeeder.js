@@ -12,7 +12,6 @@ const seedAdmin =  async (users)=>{
         firstName : 'admin',
         lastName : 'admin'
     }})
-    console.log("Admin seeded successfully")
 }
 
 module.exports = seedAdmin
