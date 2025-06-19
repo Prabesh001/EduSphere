@@ -1,6 +1,6 @@
-# Shikshyalaya
+# EduSphere
 
-Shikshyalaya is a full-stack web-based learning management system built using the MERN stack. It provides a platform for students to enroll in courses and track their learning progress, while instructors can manage content, monitor student activity, and engage learners through multimedia lessons and interactive assessments.
+EduSphere is a full-stack web-based learning management system built using the MERN stack. It provides a platform for students to enroll in courses and track their learning progress, while instructors can manage content, monitor student activity, and engage learners through multimedia lessons and interactive assessments.
 
 ## Features
 
@@ -39,8 +39,8 @@ Make sure you have the following installed:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Prabesh001/shikshyalaya.git
-   cd shikshyalaya
+   git clone https://github.com/Prabesh001/EduSphere.git
+   cd EduSphere
    ```
 
 2. **Set up backend:**
@@ -73,7 +73,7 @@ The frontend will run on `http://localhost:3000` and the backend on `http://loca
 ## Folder Structure
 
 ```
-Shikshyala/
+EduSphere/
 ├── backend/
 │   ├── controllers/
 │   ├── models/
