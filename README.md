@@ -80,7 +80,7 @@ The frontend will run on `http://localhost:3000` and the backend on `http://loca
 ## Folder Structure
 
 ```
-Shikshyala/
+EduSphere/
 ├── backend/
 │   ├── controllers/
 │   ├── models/
