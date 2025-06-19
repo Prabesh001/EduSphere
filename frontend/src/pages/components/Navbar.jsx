@@ -62,7 +62,6 @@ const Navbar = () => {
     };
   }, [showMenu]);
 
-
   return (
     <header
       id="page-header"
@@ -88,7 +87,7 @@ const Navbar = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <span>Shikshyalaya</span>
+            <span>EduSphere</span>
           </Link>
         </div>
         <div>
@@ -136,10 +135,11 @@ const Navbar = () => {
                     >
                       View Profile
                     </Link>
-                    <div
-                      className="block text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      <ConfirmLogout showMenu={showMenu} setShowMenu={setShowMenu}/>
+                    <div className="block text-sm text-gray-700 hover:bg-gray-100">
+                      <ConfirmLogout
+                        showMenu={showMenu}
+                        setShowMenu={setShowMenu}
+                      />
                     </div>
                   </div>
                 )}

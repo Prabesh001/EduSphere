@@ -53,7 +53,7 @@ const Login = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span>Shikshyalaya</span>
+                <span>EduSphere</span>
               </h1>
               <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">
                 Welcome, please sign in to your dashboard
@@ -116,7 +116,10 @@ const Login = () => {
                   <legend className="text-center px-3">OR</legend>
                 </fieldset>
                 <div className="w-full text-center mt-2">
-                  <Link to={"/login"} className="text-blue-4text-sm font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300">
+                  <Link
+                    to={"/login"}
+                    className="text-blue-4text-sm font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
+                  >
                     Login
                   </Link>
                 </div>

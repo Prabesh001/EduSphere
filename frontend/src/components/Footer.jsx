@@ -6,14 +6,14 @@ const Footer = () => {
     <div className="mt-4 flex items-center justify-center flex-col gap-y-2 bg-blue-600 dark:bg-gray-800 p-4 text-gray-200">
       <div className="flex items-center justify-center flex-col">
         <p className="text-sm text-center my-3 lg:w-[90%]">
-          Unlock Your Learning Potential with Shikshyalaya! We are committed to
+          Unlock Your Learning Potential with EduSphere! We are committed to
           delivering exceptional IT education, empowering students to master
           skills, achieve certifications, and thrive in their careers. Join us
           and transform your future today.
         </p>
         <p className="text-sm">
           &copy; {new Date().getFullYear()}{" "}
-          <span className="font-bold dark:text-gray-200">Shikshyalaya</span>. All
+          <span className="font-bold dark:text-gray-200">EduSphere</span>. All
           rights reserved.
         </p>
       </div>

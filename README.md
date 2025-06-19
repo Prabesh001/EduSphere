@@ -1,6 +1,6 @@
-# Shikshyalaya
+# EduSphere
 
-Shikshyalaya is a full-stack web-based learning management system built using the MERN stack. It provides a platform for students to enroll in courses and track their learning progress, while instructors can manage content, monitor student activity, and engage learners through multimedia lessons and interactive assessments.
+EduSphere is a full-stack web-based learning management system built using the MERN stack. It provides a platform for students to enroll in courses and track their learning progress, while instructors can manage content, monitor student activity, and engage learners through multimedia lessons and interactive assessments.
 
 ## Features
 
@@ -15,12 +15,14 @@ Shikshyalaya is a full-stack web-based learning management system built using th
 ## Technologies Used
 
 ### Frontend
+
 - React.js
 - Tailwind CSS
 - Axios
 - React Router
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB
@@ -32,24 +34,28 @@ Shikshyalaya is a full-stack web-based learning management system built using th
 ### Prerequisites
 
 Make sure you have the following installed:
+
 - Node.js & npm
 - MongoDB (local or cloud instance)
 
 ### Installation
 
 1. **Clone the repository:**
+
    ```bash
-   git clone https://github.com/Prabesh001/shikshyalaya.git
-   cd shikshyalaya
+   git clone https://github.com/Prabesh001/EduSphere.git
+   cd EduSphere
    ```
 
 2. **Set up backend:**
+
    ```bash
    cd backend
    npm install
    ```
 
    Create a `.env` file in the `backend` directory with the following:
+
    ```env
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
@@ -57,6 +63,7 @@ Make sure you have the following installed:
    ```
 
 3. **Run backend server:**
+
    ```bash
    npm run dev
    ```

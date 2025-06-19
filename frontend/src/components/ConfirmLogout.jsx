@@ -29,7 +29,7 @@ export default function ConfirmLogout() {
       customUI: ({ onClose }) => {
         return (
           <div className="bg-white p-6 rounded-lg shadow-xl border max-w-sm mx-auto text-center">
-            <h1 className="text-xl font-bold text-gray-800 mb-3">Shikshyalaya</h1>
+            <h1 className="text-xl font-bold text-gray-800 mb-3">EduSphere</h1>
             <p className="text-gray-600 mb-5">
               Are you sure you want to logout?
             </p>

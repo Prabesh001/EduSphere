@@ -12,13 +12,13 @@ export default function Home() {
               Learn With Us
             </div>
             <h1 className="mb-4 text-4xl font-black text-black dark:text-white">
-              Shikshyalaya
+              EduSphere
               <span className="ml-2 text-blue-600 dark:text-blue-500">
                 Nepal
               </span>
             </h1>
             <h2 className="text-xl mb-8 font-medium leading-relaxed text-gray-700 dark:text-gray-300">
-              &quot;Unlock Your Learning Potential with Shikshyalaya! We are
+              &quot;Unlock Your Learning Potential with EduSphere! We are
               committed to delivering exceptional IT education, empowering
               students to master skills, achieve certifications, and thrive in
               their careers. Join us and transform your future today.&quot;

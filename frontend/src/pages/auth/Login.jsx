@@ -38,7 +38,9 @@ const Login = () => {
         return;
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Please check your email and password!");
+      toast.error(
+        error.response?.data?.message || "Please check your email and password!"
+      );
     }
   };
   return (
@@ -67,7 +69,7 @@ const Login = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span>Shikshyalaya</span>
+                <span>EduSphere</span>
               </h1>
               <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">
                 Welcome, please sign in to your dashboard
@@ -107,15 +109,6 @@ const Login = () => {
                   </div>
                   <div>
                     <div className="mb-5 flex items-center justify-between space-x-2">
-                      {/* <label className="flex items-center"> */}
-                      {/* <input
-                        type="checkbox"
-                        id="remember_me"
-                        name="remember_me"
-                        className="size-4 rounded border border-gray-200 text-blue-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-900 dark:checked:border-transparent dark:checked:bg-blue-500 dark:focus:border-blue-500"
-                      />
-                      <span className="ml-2 text-sm">Remember me</span>
-                    </label> */}
                       <a
                         href="/forgotPassword"
                         className="inline-block text-sm font-medium text-blue-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"

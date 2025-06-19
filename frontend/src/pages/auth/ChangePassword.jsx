@@ -62,7 +62,7 @@ const ChangePassword = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span> Shikshyalaya</span>
+                  <span> EduSphere</span>
                 </Link>
               </h1>
               <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">
